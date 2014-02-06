@@ -25,7 +25,6 @@
         <module name="cucumber-with-groovy" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.7" />
   </component>
 </project>
 
