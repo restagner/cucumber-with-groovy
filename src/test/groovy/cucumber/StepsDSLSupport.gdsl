@@ -1,0 +1,23 @@
+package cucumber
+
+def scriptContext = context(
+        filetypes: ['.groovy'],
+        pathRegexp: ".*/test/cucumber/.*",
+        scope: closureScope())
+
+contributor(scriptContext) {
+    property name: 'dsl', type: 'cucumber.support.CucumberWithGroovyWorld'
+
+    def methods = findClass('cucumber.support.CucumberWithGroovyWorld').methods
+    methods.findAll { it.name in forwardedMethods }.each { def myMethod ->
+
+        def params = [:]
+        myMethod.parameterList.parameters.each { param ->
+            params.put(
+                    param.name,
+                    com.intellij.psi.util.TypeConversionUtil.erasure(param.type).canonicalText)
+        }
+
+        method name: myMethod.name, type: com.intellij.psi.util.TypeConversionUtil.erasure(myMethod.returnType).canonicalText, params: params
+    }
+}
