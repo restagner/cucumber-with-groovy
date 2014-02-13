@@ -6,7 +6,7 @@ def scriptContext = context(
         scope: closureScope())
 
 contributor(scriptContext) {
-    property name: 'dsl', type: 'cucumber.support.CucumberWithGroovyWorld'
+//    property name: 'dsl', type: 'cucumber.support.CucumberWithGroovyWorld'
 
     def methods = findClass('cucumber.helpers.MyHelper').methods
 //    methods.addAll(findClass('cucumber.support.TestEnvironment').methods)
