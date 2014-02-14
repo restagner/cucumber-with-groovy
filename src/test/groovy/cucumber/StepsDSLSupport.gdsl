@@ -8,17 +8,19 @@ def scriptContext = context(
 contributor(scriptContext) {
 //    property name: 'dsl', type: 'cucumber.support.CucumberWithGroovyWorld'
 
-    def methods = findClass('cucumber.helpers.MyHelper').methods
-//    methods.addAll(findClass('cucumber.support.TestEnvironment').methods)
-    methods.each { def theMethod ->
+    def methods1 = findClass('cucumber.helpers.MyHelper').methods
+    def methods2 = findClass('cucumber.support.TestEnvironment').methods
+    def methods = methods1 + methods2
+
+    methods.each { def aMethod ->
 
         def params = [:]
-        theMethod.parameterList.parameters.each { param ->
+        aMethod.parameterList.parameters.each { param ->
             params.put(
                     param.name,
                     com.intellij.psi.util.TypeConversionUtil.erasure(param.type).canonicalText)
         }
 
-        method name: theMethod.name, type: com.intellij.psi.util.TypeConversionUtil.erasure(theMethod.returnType)?.canonicalText, params: params
+        method name: aMethod.name, type: com.intellij.psi.util.TypeConversionUtil.erasure(aMethod.returnType)?.canonicalText, params: params
     }
 }
